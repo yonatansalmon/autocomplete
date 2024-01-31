@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/components/__tests__/ListItem.test.js", "src/components/__tests__/AutoComplete.test.js"  ]
 }
