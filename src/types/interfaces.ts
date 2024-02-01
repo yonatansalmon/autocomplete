@@ -1,6 +1,6 @@
 export interface Country {
-  name: { common: string; }; 
-  flags: { png: string; svg: string; }; 
+  name: { common: string };
+  flags: { png: string; svg: string };
 }
 
 export interface ListItemProps {
@@ -10,5 +10,5 @@ export interface ListItemProps {
 
 export interface LoadingErrorProps {
   isLoading: boolean;
-  error: string | null
+  error: string | null;
 }

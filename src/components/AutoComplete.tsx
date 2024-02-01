@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { Country } from '../types/interfaces';
 import ListItem from './ListItem';
 import LoadingAndError from './LoadingAndError';
 import useDebounce from '../hooks/useDebounce';
 import useFetchCategories from '../hooks/useFetchCategories';
-import { Country } from '../types/interfaces';
 
 const AutoComplete = () => {
   const [query, setQuery] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedImage, setSelectedImage] = useState('');
+  const [autoCompleteCountries, setAutoCompleteCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({ name: '', flag: '' });
 
-  const debouncedQuery = useDebounce(query, 800);
   const { countries, loading, error, setLoading } = useFetchCategories();
+  const inputValue = useDebounce(query, 800);
 
-  const displayCountries = (newQuery: string) => {
+  const displayAutoComplete = (newQuery: string) => {
     setLoading(true);
-    const filteredData = countries.filter((country: Country) => country.name.common.toLowerCase().includes(newQuery.toLowerCase()));
-    setFilteredData(filteredData);
+    ///Matching all countries in countries state with input to display in autocomplete
+    const autoCompleteCountries = countries.filter((country: Country) => country.name.common.toLowerCase().includes(newQuery.toLowerCase()));
+    setAutoCompleteCountries(autoCompleteCountries);
     setLoading(false);
   };
 
@@ -25,22 +25,21 @@ const AutoComplete = () => {
     setQuery(e.target.value);
   };
 
-  const handleItemClick = (imageUrl: string, categoryName: string) => {
-    setSelectedImage(imageUrl);
-    setQuery(categoryName);
-    setSelectedCategory(categoryName);
-    setFilteredData([]);
+  const handleItemClick = (imageUrl: string, countryName: string) => {
+    setSelectedCountry({ name: countryName, flag: imageUrl });
+    setQuery(countryName);
+    setAutoCompleteCountries([]);
   };
 
   useEffect(() => {
-    if (debouncedQuery.length > 0 && debouncedQuery !== selectedCategory) {
-      setSelectedImage('');
-      displayCountries(debouncedQuery);
-    } else if (debouncedQuery.length === 0) {
-      setSelectedImage('');
-      setFilteredData([]);
+    if (inputValue.length > 0 && inputValue !== selectedCountry.name) {
+      setSelectedCountry({ name: '', flag: '' });
+      displayAutoComplete(inputValue);
+    } else if (inputValue.length === 0) {
+      setSelectedCountry({ name: '', flag: '' });
+      setAutoCompleteCountries([]);
     }
-  }, [debouncedQuery, countries]);
+  }, [inputValue, countries]);
 
   if (loading || error) {
     return <LoadingAndError isLoading={loading} error={error} />;
@@ -50,14 +49,14 @@ const AutoComplete = () => {
     <div className='autocomplete'>
       <h1 className='title'>Auto Complete</h1>
       <input type='text' value={query} onChange={handleInputChange} placeholder='Search...' />
-      <ul data-testid="country-list"  style={{ display: filteredData.length > 0 ? 'block' : 'none' }}>
-        {filteredData.map((country: Country, index) => (
+      <ul data-testid='country-list' style={{ display: autoCompleteCountries.length > 0 ? 'block' : 'none' }}>
+        {autoCompleteCountries.map((country: Country, index) => (
           <li key={index} onClick={() => handleItemClick(country.flags.png, country.name.common)}>
             <ListItem item={country.name.common} query={query} />
           </li>
         ))}
       </ul>
-      {selectedImage && <img className='selected-image' src={selectedImage} alt='Selected Food' />}
+      {selectedCountry.flag && <img className='selected-image' src={selectedCountry.flag} alt={selectedCountry.name} />}
     </div>
   );
 };

@@ -15,7 +15,6 @@ const useFetchCategories = () => {
           throw new Error(`Something went wrong! Status: ${res.status}`);
         }
         const data = await res.json();
-        console.log(data);
         setCountries(data);
       } catch (error) {
         if (error instanceof Error) {

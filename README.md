@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+# AutoComplete Country Selector App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React application provides an auto-complete feature for selecting countries. It fetches country data from an external API and allows users to search and select a country from the auto-complete suggestions.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Auto-complete Search**: Dynamically search for countries as you type.
+- **Debounce Input**: Implements debouncing to optimize search performance.
+- **Country Selection**: Click to select a country from the auto-complete suggestions, country flag will be displayed.
+- **Error Handling**: Displays error messages for failed data fetching.
+- **Loading State**: Shows a loading indicator while fetching data.
 
-### `npm start`
+## Installation and Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To get this project running locally:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Navigate to the project directory and run `npm install` to install dependencies.
+2. Start the application with `npm start`. The app should now be running on [http://localhost:3000](http://localhost:3000).
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React (Functional Components)
+- CSS for styling
+- External API: [Rest Countries](https://restcountries.com/v3.1/all)
 
-### `npm run build`
+## Components
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **AutoComplete**: The main component that handles the auto-complete logic and renders the UI.
+- **ListItem**: Renders each country suggestion with query-matching text highlighted.
+- **LoadingAndError**: Displays loading and error messages.
+- **useDebounce**: A custom hook to debounce the search input.
+- **useFetchCategories**: A custom hook to fetch country data.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Testing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This application includes tests for the `ListItem` and `AutoComplete` components using React Testing Library and Jest.
 
-### `npm run eject`
+Run `npm test` to execute the tests.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+> This project was made with ❤️ by Yonatan Salmon

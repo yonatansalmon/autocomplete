@@ -4,12 +4,13 @@ function useDebounce(value: string, delay: number): string {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const executeCB = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 
     return () => {
-      clearTimeout(handler);
+      //Restart timeout on typing
+      clearTimeout(executeCB);
     };
   }, [value, delay]);
 
